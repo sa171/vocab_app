@@ -1,11 +1,6 @@
-var usernames = [];
-var passwords = [];
-
+const queryConnector = require('./queryConnector');
 function userRegisteration(data){
-    usernames.push(data.username);
-    passwords.push(data.password);
-    console.log(usernames);
-    console.log(passwords);
+    queryConnector.insertNewUser(data);
 }
 
 module.exports=userRegisteration;
