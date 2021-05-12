@@ -9,3 +9,6 @@ Purpose:
  3. Flashcards
  4. Save progress
  
+
+ DB:
+ https://www.kaggle.com/therohk/urban-dictionary-words-dataset

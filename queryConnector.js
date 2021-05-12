@@ -1,6 +1,7 @@
 const connection = require('./connection');
 const mysql = require('mysql');
-
+const util = require('util');
+const query = util.promisify(connection.query).bind(connection);
 class queryConnector{
     connection;
 
@@ -8,24 +9,40 @@ class queryConnector{
         this.connection = connection;
     }
 
-    findbyusername(user){
+    async findbyusername(user){
         var sql = "select username from credentials where username = "+mysql.escape(user);
         console.log(sql);
-        connection.query(sql,function(err,result){
-            if(err){
-                console.error(err.message);
-                return false;
-            }else{
-                console.log(result[0]);
-                if(result[0] != undefined){
-                    console.log("Username found",user);
-                    return true;
-                } else {
-                    return false;
-                }
-                
+        var exists = false;
+        try{
+            const rows = await query(sql);
+            console.log("rows = ",rows);
+            if(rows[0].username != undefined){
+                exists = true;
             }
-        });
+            
+        } catch{
+            console.log("Error occured during query execution");
+        }
+        console.log("Exists? ",exists);
+        return exists;
+    }
+
+    async verifyCredentials(data){
+        var sql = "select username from credentials where passwords = "+mysql.escape(data.password)+" and username = "+mysql.escape(data.username);
+        console.log(sql);
+        var exists = false;
+        try{
+            const rows = await query(sql);
+            console.log("rows = ",rows);
+            if(rows[0].username != undefined){
+                exists = true;
+            }
+            
+        } catch{
+            console.log("Error occured during query execution");
+        }
+        console.log("Exists? ",exists);
+        return exists;    
     }
 
     insertNewUser(data){
