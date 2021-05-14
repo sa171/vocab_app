@@ -2,10 +2,25 @@ const express = require('express');
 const router = express.Router();
 const userRegisteration = require('./registeration');
 const queryConnector = require('./queryConnector');
+var dotenv = require('dotenv');
+var jwt = require('jsonwebtoken');
+
+dotenv.config();
 
 router.get('/',(req,res) => {
-    res.status(201);
-    res.render('./index.ejs');
+    console.log(req.cookies);
+    if(req.cookies.data != null){
+        token = req.cookies['jwt'];
+        const verify = jwt.verify(token,process.env.JWT_SECRET_KEY);
+        console.log("Verify username = ",verify);
+        if(verify){
+            res.render('vocabcards');
+        }
+    } else{
+        res.status(201);
+        res.render('./index.ejs');
+    }
+    
 });
 
 router.get('/registeration', (req,res)=>{
@@ -20,6 +35,12 @@ router.post('/login', async function(req,res){
     if(isPresent == false){
         res.render('index');
     }else{
+        let data = req.body.username;
+        const token = jwt.sign({data}, process.env.JWT_SECRET_KEY, {
+            expiresIn: '120s'
+        }); 
+        console.log(token);
+        res.cookie('jwt',token);
         res.render('vocabcards');
     }
 });
