@@ -4,14 +4,18 @@
     </head>
     <body>
         <h1>Welcome to the Vocab app</h1>
-        <h2>Answers as many words you can:</h1>
-        <form method="post" action="/login">
-            <label for="username">Username:</label><br>
-            <input type="text" name="username"/><br>
-            <label for="password">Password:</label><br>
-            <input type="password" name="password"/><br><br>
-            <input type="submit" value="Login"/><br>
+        <h2>Search for a word:</h1>
+        <form method="post" action="/fetchWords">
+            <label for="word">Search:</label><br>
+            <input type="text" name="word"/><br><br>
+            <input type="submit" value="Search"/><br>
         </form>
+        <div>
+            <% if(query == true) {%>
+                  <h2>Definitions:</h2>
+                  <p><%= def %></p>  
+            <% } %>        
+        </div>
         <br>
     </body>
 </html>

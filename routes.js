@@ -4,6 +4,7 @@ const userRegisteration = require('./registeration');
 const queryConnector = require('./queryConnector');
 var dotenv = require('dotenv');
 var jwt = require('jsonwebtoken');
+const https = require('https');
 
 dotenv.config();
 
@@ -41,12 +42,37 @@ router.post('/login', async function(req,res){
         }); 
         console.log(token);
         res.cookie('jwt',token);
-        res.render('vocabcards');
+        res.render('vocabcards',{query:false,meaning:"NA"});
     }
 });
 
+router.post('/fetchWords', function(req,res){
+    let word = req.body.word;
+    let uri = process.env.API_PATH+word;
+    console.log("uri =",uri);
+    const options = {
+        hostname: process.env.API_HOST,
+        path:uri,
+        method: 'GET'
+    };
+    let data = "";
+    const apiRequest = https.request(options,response => {
+        response.on('data', d => {
+            let data = JSON.parse(d.toString());
+            console.log("data object", data[0]);
+            res.render('vocabcards',{query:true, def:data[0]['meanings'][0]['definitions'][0]['definition']});
+        });
+    });
+
+    apiRequest.on('error', error => {
+        console.log(error);
+        res.send("404");
+    });
+    apiRequest.end();
+    
+});
+
 router.post('/registeration',async (req,res) => {
-    req.body;
     console.log(req.body);
     var isPresent = await queryConnector.findbyusername(req.body.username);
     console.log("isPresent?",isPresent);
