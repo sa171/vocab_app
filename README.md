@@ -10,5 +10,4 @@ Purpose:
  4. Save progress
  
 
- DB:
- https://www.kaggle.com/therohk/urban-dictionary-words-dataset
+ API: https://api.dictionaryapi.dev/api/v2/entries/en_US
