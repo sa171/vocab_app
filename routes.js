@@ -5,6 +5,13 @@ const queryConnector = require('./queryConnector');
 var dotenv = require('dotenv');
 var jwt = require('jsonwebtoken');
 const https = require('https');
+var flash = require('express-flash-messages');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+
+router.use(flash());
+router.use(cookieParser('keyboard cat'));
+router.use(session({ cookie: { maxAge: 60000 }, secret:"123"}));
 
 dotenv.config();
 
@@ -15,11 +22,11 @@ router.get('/',(req,res) => {
         const verify = jwt.verify(token,process.env.JWT_SECRET_KEY);
         console.log("Verify username = ",verify);
         if(verify){
-            res.render('vocabcards');
+            res.render('vocabcards',{query:false,def:"NA"});
         }
     } else{
         res.status(201);
-        res.render('./index.ejs');
+        res.render('./index.ejs',);
     }
     
 });
@@ -42,7 +49,7 @@ router.post('/login', async function(req,res){
         }); 
         console.log(token);
         res.cookie('jwt',token);
-        res.render('vocabcards',{query:false,meaning:"NA"});
+        res.render('vocabcards',{query:false,def:"NA"});
     }
 });
 
@@ -55,12 +62,21 @@ router.post('/fetchWords', function(req,res){
         path:uri,
         method: 'GET'
     };
-    let data = "";
     const apiRequest = https.request(options,response => {
         response.on('data', d => {
             let data = JSON.parse(d.toString());
-            console.log("data object", data[0]);
-            res.render('vocabcards',{query:true, def:data[0]['meanings'][0]['definitions'][0]['definition']});
+            if(data[0] == undefined){
+                res.render('vocabcards',{query:false, def:word});
+            } else{
+                console.log("data object", data[0]);
+                data = getDefinition(data);
+                if(data == "NA"){
+                    res.render('404');
+                }else{
+                    res.render('vocabcards',{query:true, def:data});
+                }
+            }
+            
         });
     });
 
@@ -71,6 +87,28 @@ router.post('/fetchWords', function(req,res){
     apiRequest.end();
     
 });
+
+router.get('/404', function(req,res){
+    res.render('404');
+});
+
+function getDefinition(data){
+    try {
+        return data[0]['meanings'][0]['definitions'];
+    } catch (error) {
+        return "Err";
+    }
+    
+}
+
+function getPhonetics(data){
+    try {
+        return data[0]['phonetics'][0]['definitions'][0]['definition'];
+    } catch (error) {
+        return "Err";
+    }
+    
+}
 
 router.post('/registeration',async (req,res) => {
     console.log(req.body);

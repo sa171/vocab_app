@@ -1,21 +1,48 @@
 <!DOCTYPE html>
     <head>
         <title>Vocab Cards</title>
+        <link rel="stylesheet" type = "text/css" href="/vocab.css"/>
     </head>
     <body>
-        <h1>Welcome to the Vocab app</h1>
-        <h2>Search for a word:</h1>
-        <form method="post" action="/fetchWords">
+        <div id="wrapper">
+            <div class="main-content">
+              <div class="header-1">
+                <h1>Whatcha lookin' for ?</h1>
+              </div>
+              <div class="l-part"> 
+                <form method="post" action="/fetchWords">
+                    <input required type="text" name="word" placeholder="shade" class="input-1" />
+                    <input type="submit" value="Search" class="btn"/>
+                </form>
+              </div>
+            </div>
+        </div>    
+
+        <!-- <form method="post" action="/fetchWords">
             <label for="word">Search:</label><br>
             <input type="text" name="word"/><br><br>
             <input type="submit" value="Search"/><br>
-        </form>
-        <div>
-            <% if(query == true) {%>
-                  <h2>Definitions:</h2>
-                  <p><%= def %></p>  
+        </form> -->
+
+        <div class="sub-content">
+            <div class="s-part">
+                <% if(query == true) {%>
+                    <h2>Definitions:</h2>
+                    <% for( var i = 0; i< def.length; i++) { %>
+                      <li>
+                          <div>
+                              <ol>
+                                  <p><%= def[i].definition %></p>
+                                  <p>Example: <b><%= def[i].example %></b></p>
+                              </ol>
+                          </div>
+                      </li>  
+                    <% } %>
+              <% } else { %>
+                  <p>Definitions not found for "<%= def %>" please verify word</p>  
             <% } %>        
+            </div>
         </div>
-        <br>
+
     </body>
 </html>

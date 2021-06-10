@@ -1,6 +1,7 @@
 <!DOCTYPE html>
     <head>
-        <title> </title>
+        <title> Register </title>
+        <link rel="stylesheet" type = "text/css" href="/homepage.css"/>
     </head>
     <body>
         <% if(isPresent == true) {%>
@@ -8,7 +9,24 @@
                 alert("Username already taken");
             </script>
         <% } %>
-        <h1>Register for our Vocab App service</h1>
+
+        <div id="wrapper">
+            <div class="main-content">
+              <div class="header-2">
+                <h1>Sign up</h1>
+              </div>
+              <div class="l-part"> 
+                <form method="post" action="/registeration">
+                    <input required type="text" name="username" placeholder="Username" class="input-1" />
+                    <input required type="password" name="password" placeholder="Password" class="input-2" />
+                    <input required type="email" placeholder="x@mail.com" name="email" class="input-3"/>
+                    <input type="submit" value="Register" class="btn"/>
+                </form>
+              </div>
+            </div>
+        </div>    
+
+        <!-- <h1>Register for our Vocab App</h1>
         <form method="post" action="/registeration">
             <label for="username">Username:</label><br>
             <input required type="text" name="username"/><br>
@@ -18,6 +36,6 @@
             <input required type="email" name="email"/><br><br>
             <input type="submit" value="Register"/><br>
         </form>
-        <br>
+        <br> -->
     </body>
 </html>

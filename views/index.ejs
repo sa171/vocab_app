@@ -1,17 +1,42 @@
 <!DOCTYPE html>
     <head>
         <title>Vocab App</title>
+        <link rel="stylesheet" type = "text/css" href="/homepage.css"/>
     </head>
     <body>
-        <h1>Vocab App service</h1>
-        <form method="post" action="/login">
-            <label for="username">Username:</label><br>
-            <input type="text" name="username"/><br>
-            <label for="password">Password:</label><br>
-            <input type="password" name="password"/><br><br>
-            <input type="submit" value="Login"/><br>
-        </form>
-        <br>
-        <a href="./registeration">Register here</a>
+        <div id="wrapper">
+            <div class="main-content">
+              <div class="header">
+                <h1><i>Vocab App</i></h1>
+              </div>
+              <div class="l-part"> 
+                <form method="post" action="/login">
+                    <input type="text" name="username" placeholder="Username" class="input-1" />
+                    <div class="overlap-text">
+                    <input type="password" name="password" placeholder="Password" class="input-2" />
+                    <a href="/404">Forgot?</a>
+                    </div>
+                    <input type="submit" value="Log in" class="btn"/>
+                </form>
+              </div>
+            </div>
+            <div class="sub-content">
+              <div class="s-part">
+                Don't have an account?<a href="./registeration">Sign up</a>
+              </div>
+            </div>
+          </div>
+
+        <!-- <div class="">
+            <form method="post" action="/login">
+                <label for="username">Username:</label><br>
+                <input type="text" name="username"/><br>
+                <label for="password">Password:</label><br>
+                <input type="password" name="password"/><br><br>
+                <input type="submit" value="Login"/><br>
+            </form>
+            <br>
+            <a href="./registeration">Register here</a>
+        </div> -->
     </body>
 </html>
