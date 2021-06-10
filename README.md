@@ -1,7 +1,7 @@
 # vocab_app
 
 Purpose:
-  Creation of a vocab app that will fetch words and their meanings which are presented before user as a  questionare.
+  Creating a vocab app that will fetch meanings and examples of words, recommends words that are alike and maintains history.
   
  Functionality:
  1. Authentication(basic, token)
