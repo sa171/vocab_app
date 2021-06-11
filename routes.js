@@ -55,29 +55,33 @@ router.post('/login', async function(req,res){
 
 router.post('/fetchWords', function(req,res){
     let word = req.body.word;
-    let uri = process.env.API_PATH+word;
+    let uri = process.env.API_PATH +req.body.lang+"/"+word;
     console.log("uri =",uri);
     const options = {
         hostname: process.env.API_HOST,
         path:uri,
         method: 'GET'
     };
-    const apiRequest = https.request(options,response => {
-        response.on('data', d => {
-            let data = JSON.parse(d.toString());
-            if(data[0] == undefined){
-                res.render('vocabcards',{query:false, def:word});
-            } else{
-                console.log("data object", data[0]);
-                data = getDefinition(data);
-                if(data == "NA"){
-                    res.render('404');
-                }else{
-                    res.render('vocabcards',{query:true, def:data});
+    const apiRequest = https.request(options,(err,response) => {
+        if(err){
+            console.log("Error : "+err);
+        } else{
+            response.on('data', d => {
+                let data = JSON.parse(d.toString());
+                if(data[0] == undefined){
+                    res.render('vocabcards',{query:false, def:word});
+                } else{
+                    console.log("data object", data[0]);
+                    data = getDefinition(data);
+                    if(data == "NA"){
+                        res.render('404');
+                    }else{
+                        res.render('vocabcards',{query:true, def:data});
+                    }
                 }
-            }
-            
-        });
+                
+            });
+        }
     });
 
     apiRequest.on('error', error => {
@@ -101,14 +105,6 @@ function getDefinition(data){
     
 }
 
-function getPhonetics(data){
-    try {
-        return data[0]['phonetics'][0]['definitions'][0]['definition'];
-    } catch (error) {
-        return "Err";
-    }
-    
-}
 
 router.post('/registeration',async (req,res) => {
     console.log(req.body);

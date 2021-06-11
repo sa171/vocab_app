@@ -11,7 +11,11 @@
               </div>
               <div class="l-part"> 
                 <form method="post" action="/fetchWords">
-                    <input required type="text" name="word" placeholder="shade" class="input-1" />
+                    <input required type="text" name="word" placeholder="shade" class="input-1" />                
+                    <input type="button" class="lang" name = "English" value="English"/>
+                    <input type="button" class="lang" name = "Hindi" value="Hindi"/>
+                    <input type="button" class="lang" name = "French" value="French"/>
+                    <input type="button" class="lang" name = "German" value="German"/>                
                     <input type="submit" value="Search" class="btn"/>
                 </form>
               </div>
@@ -25,9 +29,9 @@
         </form> -->
 
         <div class="sub-content">
-            <div class="s-part">
+            <h2>Definitions:</h2>
+            <div class="s-part-def">
                 <% if(query == true) {%>
-                    <h2>Definitions:</h2>
                     <% for( var i = 0; i< def.length; i++) { %>
                       <li>
                           <div>
