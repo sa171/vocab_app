@@ -5,6 +5,7 @@ const queryConnector = require('./queryConnector');
 var dotenv = require('dotenv');
 var jwt = require('jsonwebtoken');
 const https = require('https');
+const axios = require('axios');
 var flash = require('express-flash-messages');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
@@ -54,41 +55,31 @@ router.post('/login', async function(req,res){
 });
 
 router.post('/fetchWords', function(req,res){
+    console.log("Request body: ",req.body);
     let word = req.body.word;
-    let uri = process.env.API_PATH +req.body.lang+"/"+word;
+    let uri = process.env.API_HOST+process.env.API_PATH + req.body.lang + "/" + word;
     console.log("uri =",uri);
-    const options = {
-        hostname: process.env.API_HOST,
-        path:uri,
-        method: 'GET'
-    };
-    const apiRequest = https.request(options,(err,response) => {
-        if(err){
-            console.log("Error : "+err);
+    // console.log("Options = ",options);
+    // uri = "https://api.dictionaryapi.dev/api/v2/entries/en_US/" + word;
+    axios.get(uri).then(d => {
+        let data = d.data;
+        console.log("Data : ",d.data);
+        console.log("Status :",d.status);
+        if(d.status != '200'){
+            res.render('vocabcards',{query:false, def:word});
         } else{
-            response.on('data', d => {
-                let data = JSON.parse(d.toString());
-                if(data[0] == undefined){
-                    res.render('vocabcards',{query:false, def:word});
-                } else{
-                    console.log("data object", data[0]);
-                    data = getDefinition(data);
-                    if(data == "NA"){
-                        res.render('404');
-                    }else{
-                        res.render('vocabcards',{query:true, def:data});
-                    }
-                }
-                
-            });
+            console.log("data object", data[0]);
+            def = getDefinition(data);
+            if(data == "NA"){
+                res.render('404');
+            }else{
+                res.render('vocabcards',{query:true, def:def, word:data[0].word});
+            }
         }
-    });
-
-    apiRequest.on('error', error => {
-        console.log(error);
-        res.send("404");
-    });
-    apiRequest.end();
+    }).catch(err => {
+        console.log(err);
+        res.render('vocabcards',{query:false, def:word});
+    })
     
 });
 

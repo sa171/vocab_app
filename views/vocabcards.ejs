@@ -12,10 +12,16 @@
               <div class="l-part"> 
                 <form method="post" action="/fetchWords">
                     <input required type="text" name="word" placeholder="shade" class="input-1" />                
-                    <input type="button" class="lang" name = "English" value="English"/>
-                    <input type="button" class="lang" name = "Hindi" value="Hindi"/>
-                    <input type="button" class="lang" name = "French" value="French"/>
-                    <input type="button" class="lang" name = "German" value="German"/>                
+                    <div class="radio-lang">
+                      <input type="radio" id="En" name="lang" checked="checked" value="en_US"/>
+                      <label for="En">English</label>  
+                      <input type="radio" id="hi" name="lang" value="hi"/> 
+                      <label for="hi">Hindi</label>  
+                      <input type="radio" id="ja" name="lang" value="ja"/> 
+                      <label for="ja">Japanese</label>  
+                      <input type="radio" id="de" name="lang" value="de"/>  
+                      <label for="de">German</label>  
+                    </div>             
                     <input type="submit" value="Search" class="btn"/>
                 </form>
               </div>
@@ -29,9 +35,10 @@
         </form> -->
 
         <div class="sub-content">
-            <h2>Definitions:</h2>
+            
             <div class="s-part-def">
                 <% if(query == true) {%>
+                    <h2 class="word">Definitions for <%= word %>:</h2>
                     <% for( var i = 0; i< def.length; i++) { %>
                       <li>
                           <div>
