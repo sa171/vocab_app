@@ -110,5 +110,18 @@ router.post('/registeration',async (req,res) => {
     
 });
 
+router.get('/news', (req,res) => {
+    let uri = process.env.NEWS_HOST + process.env.NEWS_PATH;
+    axios.get(uri).
+        then(response => {
+            console.log(response.data.data);
+            res.render('newscards',{query:false,def:"NA",data:response.data.data});
+        }).catch(err => {
+            console.log(err);
+            console.log('404');
+        });
+            
+});
+
 
 module.exports = router;
