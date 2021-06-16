@@ -7,11 +7,11 @@
         <div id="wrapper">
             <div class="main-content">
               <div class="header-1">
-                <h1>Whatcha lookin' for ?</h1>
+                <h1>Looking for something?</h1>
               </div>
               <div class="l-part"> 
                 <form method="post" action="/fetchWords">
-                    <input required type="text" name="word" placeholder="shade" class="input-1" />                
+                    <input required type="text" name="word" placeholder="look up a word..." class="input-1" />                
                     <div class="radio-lang">
                       <input type="radio" id="En" name="lang" checked="checked" value="en_US"/>
                       <label for="En">English</label>  
@@ -28,17 +28,11 @@
             </div>
         </div>    
 
-        <!-- <form method="post" action="/fetchWords">
-            <label for="word">Search:</label><br>
-            <input type="text" name="word"/><br><br>
-            <input type="submit" value="Search"/><br>
-        </form> -->
-
         <div class="sub-content">
             
             <div class="s-part-def">
                 <% if(query == true) {%>
-                    <h2 class="word">Definitions for <%= word %>:</h2>
+                    <p class="word">Definitions for <b><%= word %>:</b></p>
                     <% for( var i = 0; i< def.length; i++) { %>
                       <li>
                           <div>

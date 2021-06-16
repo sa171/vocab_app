@@ -12,7 +12,7 @@
     height: 50%;
     overflow: hidden;
     border: 0px solid #000;
-    margin: 0px auto;
+    margin-left: -90px;
     padding: 10px;
   }
   
@@ -49,11 +49,12 @@
   .input-2,
   .input-3 {
     width: 100%;
-    margin-bottom: 5px;
-    padding: 8px 12px;
+    margin-bottom: 5px; 
+    padding: 9px 12px;
     border: 1px solid #dbdbdb;
     box-sizing: border-box;
     border-radius: 3px;
+    margin-top: 5px;
   }
   
   .overlap-text {
@@ -85,9 +86,9 @@
   .sub-content {
     width: 300px;
     height: 40%;
-    margin: 10px auto;
+    margin-left: 10px;
     border: 1px solid #e6e6e6;
-    padding: 20px 50px;
+    padding: 10px 20px;
     background-color: #fff;
   }
   
@@ -135,7 +136,8 @@
   }
 
   .word{
-    
+    text-align: left;
+    margin: 4px 2px;
   }
 
   .radio-lang {
