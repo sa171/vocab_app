@@ -118,7 +118,7 @@ router.get('/news', (req,res) => {
             res.render('newscards',{query:false,def:"NA",data:response.data.data});
         }).catch(err => {
             console.log(err);
-            console.log('404');
+            res.render('404');
         });
             
 });

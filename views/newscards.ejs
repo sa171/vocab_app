@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+    <head>
+        <title>Vocab Cards</title>
+        <link rel="stylesheet" type = "text/css" href="/newscards.css"/>
+    </head>
+    <body>
+      <div id="wrapper">
+        <div class="main-content">
+          <div class="header-1">
+            <h1>News articles</h1>
+          </div>
+          <div class="l-part"> 
+            <form method="post" action="/news">                
+                <label for="category">Category:</label>           
+                <select class = "input-1" name="category" id="cat">
+                  <option value="general" aria-checked="true">General</option>
+                  <option value="business">Business</option>
+                  <option value="health">Health</option>
+                  <option value="science">Science</option>
+                  <option value="sports">Sports</option>
+                  <option value="technology">Technology</option>
+                </select>
+                <input type="submit" value="Search" class="btn"/>
+            </form>
+          </div>
+        </div>
+      </div> 
+
+        <div id="wrapper-1">
+            <div class="main-content-1">              
+              <% for( var i = 0; i< data.length; i++) { %>
+                <li>
+                    <ul class="sub-content-1">
+                        <h2><%= data[i].title %></h2>
+                        <p class="para"><%= data[i].description %></p>
+                        <a href="<%= data[i].url %>">Link to article</a>
+                    </ul>
+                </li>
+              <%}%>
+            </div>
+        </div>    
+
+    </body>
+</html>
