@@ -20,14 +20,25 @@
                   <option value="sports">Sports</option>
                   <option value="technology">Technology</option>
                 </select>
+                <label for="country">Country:</label>           
+                <select class = "input-1" name="country" id="cnt">
+                  <option value="us" aria-checked="true">USA</option>
+                  <option value="in">India</option>
+                  <option value="au">Australia</option>
+                  <option value="jp">Japanese</option>
+                  <option value="qb">UK</option>
+                  <option value="de">Germany</option>
+                </select>
                 <input type="submit" value="Search" class="btn"/>
             </form>
           </div>
         </div>
       </div> 
 
+      <% if(query == true) {%>
         <div id="wrapper-1">
-            <div class="main-content-1">              
+            <div class="main-content-1">
+              <h2><span>Filtered for <i><%= cat %></i></span></h2><br>              
               <% for( var i = 0; i< data.length; i++) { %>
                 <li>
                     <ul class="sub-content-1">
@@ -39,6 +50,6 @@
               <%}%>
             </div>
         </div>    
-
+      <% } %>  
     </body>
 </html>

@@ -15,4 +15,6 @@ Purpose:
  4. Save progress
  
 
- API used://api.dictionaryapi.dev/api/v2/entries/en_US
+ API'S used:
+ 1. //api.dictionaryapi.dev/api/v2/entries/en_US
+ 2. https://mediastack.com/documentation

@@ -112,15 +112,32 @@ router.post('/registeration',async (req,res) => {
 
 router.get('/news', (req,res) => {
     let uri = process.env.NEWS_HOST + process.env.NEWS_PATH;
+    uri = uri + "&countries=us,gb";
     axios.get(uri).
         then(response => {
-            console.log(response.data.data);
+            // console.log(response.data.data);
             res.render('newscards',{query:false,def:"NA",data:response.data.data});
         }).catch(err => {
             console.log(err);
             res.render('404');
         });
             
+});
+
+router.post('/news',(req,res) => {
+    let uri = process.env.NEWS_HOST + process.env.NEWS_PATH;
+    let cat = req.body.category;
+    let cnt = req.body.country;
+    uri = uri + "&sources="+cat+"&countries="+cnt;
+    console.log("Uri :",uri);
+    axios.get(uri).
+        then(response => {
+            // console.log(response.data.data);
+            res.render('newscards',{query:true,cat:cat,data:response.data.data});
+        }).catch(err => {
+            console.log(err);
+            res.render('404');
+        });
 });
 
 
